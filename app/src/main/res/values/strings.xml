@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Kan_leters</string>
+    <string-array name="language_arrays">
+        <item>English</item>
+        <item>Kannada</item>
+    </string-array>
+</resources>

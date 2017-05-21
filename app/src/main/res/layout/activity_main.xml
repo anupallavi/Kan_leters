@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    android:background="@color/colorAccent"
+    tools:context="com.example.hp.kan_leters.MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Speak To Your Diary"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18dp"
+        android:id="@+id/tx1"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="10dp"
+        android:textStyle="bold">
+
+    </TextView>
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberPassword"
+        android:layout_below="@+id/tx1"
+        android:layout_gravity="center"
+
+        />
+    <Button
+        android:id="@+id/open"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_below="@+id/password"
+        android:text="open"
+        />
+    <Button
+        android:id="@+id/setpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_below="@+id/open"
+        android:text="Set password"
+        android:onClick="setpassword"
+        />
+</LinearLayout>
