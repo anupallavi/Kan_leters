@@ -115,10 +115,12 @@ public class DiaryContent  extends AppCompatActivity implements TextToSpeech.OnI
     private Button.OnClickListener startRecognizerOnClickListener = new Button.OnClickListener() {
         @Override
         public void onClick(View arg0) {
+
             Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "en-IN");
-            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "speech to recognize");
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en_US");
+           // intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "en-IN");
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"speak now");
             startActivityForResult(intent, RQS_RECOGNITION);
 
         }
@@ -133,6 +135,7 @@ public class DiaryContent  extends AppCompatActivity implements TextToSpeech.OnI
 
             if (language.equals("English")) {
                 editText.append(result.get(0));
+                editText.append(" ");
             } else if (language.equals("Kannada")) {
 
 
@@ -166,6 +169,7 @@ public class DiaryContent  extends AppCompatActivity implements TextToSpeech.OnI
 
         }
     }
+
 
     @Override
     public void onInit(int status) {

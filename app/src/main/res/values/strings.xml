@@ -1,6 +1,23 @@
 <resources>
     <string name="app_name">Kan_leters</string>
+    <string name="appname">Kan_leters</string>
+
+    <string name="heading">Speak To Your Diary</string>
+    <string name="password">Password</string>
+    <string name="open">Open</string>
+    <string name="settings">Settings</string>
+    <string name="save">Save</string>
+    <string name="prepass">Previous Password</string>
+    <string name="newpass">New Password</string>
+    <string name="ok">Ok</string>
+    <string name="applang">App Language</string>
+    <string name="set">Set</string>
+    <string name="speak">Speak now</string>
     <string-array name="language_arrays">
+        <item>English</item>
+        <item>Kannada</item>
+    </string-array>
+    <string-array name="language_layout">
         <item>English</item>
         <item>Kannada</item>
     </string-array>

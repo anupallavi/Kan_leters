@@ -1,29 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
     android:background="@color/colorAccent"
-    tools:context="com.example.hp.kan_leters.MainActivity">
+
+    tools:context="com.example.hp.kan_leters.MainActivity"
+
+    >
+
+
+    <include layout="@layout/title_layout"
+        />
+
+
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Speak To Your Diary"
+        android:text="@string/heading"
         android:textColor="@color/colorPrimary"
         android:textSize="30dp"
         android:gravity="center"
         android:layout_marginTop="30dp"
         android:textStyle="bold"
+
         />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Password"
+        android:text="@string/password"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="18dp"
         android:id="@+id/tx1"
@@ -49,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_below="@+id/password"
-        android:text="open"
+        android:text="@string/open"
         />
     <Button
         android:id="@+id/setpassword"
@@ -57,7 +69,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_below="@+id/open"
-        android:text="Set password"
+        android:text="@string/settings"
         android:onClick="setpassword"
         />
+
 </LinearLayout>

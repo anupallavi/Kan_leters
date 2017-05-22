@@ -3,6 +3,7 @@ package com.example.hp.kan_leters;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.CalendarView;
 
 /**
@@ -36,4 +37,5 @@ public class CalendarActivity extends AppCompatActivity {
 
 
     }
+
 }
