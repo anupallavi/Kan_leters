@@ -37,5 +37,12 @@ public class CalendarActivity extends AppCompatActivity {
 
 
     }
+    public void resetcontent(int dayOfMonth,int month,int year){
+        String content = myDB.sendDate(dayOfMonth, month, year);
+        Intent intent = new Intent(CalendarActivity.this, DiaryContent.class);
+        intent.putExtra("Date", dayOfMonth + "/" + month + "/"+ year);
+        intent.putExtra("Content", content);
+        startActivity(intent);
+    }
 
 }

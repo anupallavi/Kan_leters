@@ -1,14 +1,21 @@
 package com.example.hp.kan_leters;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
+import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,7 +29,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import java.io.File;
 import java.util.Locale;
+
+import static android.content.ContentValues.TAG;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
@@ -33,7 +43,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     AlertDialog.Builder builder;
     ToggleButton toggleButton;
     Locale myLocale;
-
+    private static final int PERMISSION_REQUEST_CODE = 1;
+    public static final String FILE_DIR = "diaryContent";
     static String saved_pass="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +58,26 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         open = (Button) findViewById(R.id.open);
         set = (Button) findViewById(R.id.setpassword);
 
+        if (Build.VERSION.SDK_INT >= 23)
+        {
+            if (checkPermission())
+            {
+                // Code for above or equal 23 API Oriented Device
+                // Your Permission granted already .Do next code
+            } else {
+                requestPermission(); // Code for permission
+            }
+        }
+        else
+        {
 
+            // Code for Below 23 API Oriented Device
+            // Do next code
+            File f = new File(Environment.getExternalStorageDirectory(), FILE_DIR);
+            if (!f.exists()) {
+                f.mkdirs();
+            }
+        }
 
 
 
@@ -76,6 +106,24 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             }
         });
+    }
+
+    private boolean checkPermission() {
+        int result = ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (result == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void requestPermission() {
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            Toast.makeText(MainActivity.this, "Write External Storage permission allows us to do store images. Please allow this permission in App Settings.", Toast.LENGTH_LONG).show();
+        } else {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+        }
     }
 
 
@@ -214,4 +262,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.e("value", "Permission Granted, Now you can use local drive .");
+                } else {
+                    Log.e("value", "Permission Denied, You cannot use local drive .");
+                }
+                break;
+        }
+    }
+
+
 }

@@ -1,14 +1,20 @@
 package com.example.hp.kan_leters;
 
+import android.Manifest;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
 import java.io.File;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by Hp on 5/17/2017.
@@ -25,6 +31,7 @@ public class ContentDatabase extends SQLiteOpenHelper {
     public ContentDatabase(Context context) {
 
         // super(context, DATABASE_NAME, null, 1);
+
         super(context, Environment.getExternalStorageDirectory()
                 + File.separator + FILE_DIR + File.separator + DATABASE_NAME, null, 1);
 

@@ -36,4 +36,7 @@
             android:configChanges="locale|orientation|keyboardHidden"/>
     </application>
 
+
+
+
 </manifest>

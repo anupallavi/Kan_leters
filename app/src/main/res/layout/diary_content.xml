@@ -7,16 +7,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@layout/title_layout">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:id="@+id/date"
-            android:layout_gravity="center"
-            android:background="@color/colorPrimaryDark"
-            android:textSize="25dp"
-            android:textAlignment="center"
-            android:textColor="@color/textColor"
+        android:background="@color/colorPrimaryDark">
+
+        <Spinner
+
+            android:id="@+id/menu"
+            android:layout_width="25dp"
+            android:layout_height="45dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             />
 
         <ImageButton
@@ -25,8 +24,39 @@
             android:id="@+id/calendarButton"
             android:src="@drawable/calendar"
             android:scaleType="fitCenter"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_toRightOf="@+id/menu"/>
+
+        <Button
+
+            android:id="@+id/predate"
+            android:layout_width="35dp"
+            android:layout_height="45dp"
+            android:layout_toRightOf="@+id/date"
+            android:text="<"
+            android:textColor="@color/colorAccent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/date"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
+            android:textSize="25dp"
+            android:textAlignment="center"
+            android:textColor="@color/textColor"
+            />
+
+        <Button
+
+            android:id="@+id/nextdate"
+            android:layout_width="35dp"
+            android:layout_height="45dp"
+            android:layout_toLeftOf="@+id/date"
+            android:text=">"
+            android:textColor="@color/colorAccent"
+            />
+
 
         <ImageButton
             android:layout_width="54dp"
@@ -67,7 +97,7 @@
         android:textColor="@color/textColor"
         android:id="@+id/save_button"
         android:layout_gravity="center"
-        android:text="@string/save"
+        android:text="Save"
         android:layout_marginBottom="20dp"
         android:background="@drawable/button_selecter"
         android:layout_alignParentBottom="true"
