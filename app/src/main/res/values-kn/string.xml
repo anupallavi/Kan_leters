@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ಕನ್ನಡ ಅಕ್ಷರ </string>
+    <string name="appname">ಕನ್ನಡ ಅಕ್ಷರ </string>
+    <string name="heading">ನಿಮ್ಮ ದಿನಚರಿ ಪುಸ್ತಕ ಜೋತೆ ಮಾತನಾಡಿ</string>
+    <string name="password">ಪಾಸ್ವರ್ಡ್</string>
+    <string name="open">ತೆರೆ</string>
+    <string name="settings">ಸೆಟ್ಟಿಂಗ್ಸ್</string>
+    <string name="save">ಉಳಿಸು</string>
+    <string name="prepass">ಹಿಂದಿನ ಪಾಸ್ವರ್ಡ್</string>
+    <string name="newpass">ಹೊಸ ಪಾಸ್ವರ್ಡ್</string>
+    <string name="ok">ಓಕೆ</string>
+    <string name="applang"> ಅಪ್ಲಿಕೇಶನ್ ಬಾಷೆ</string>
+    <string name="set">ಸೆಟ್</string>
+    <string name="speak">ಈಗ ಮಾತನಾಡಿ</string>
+    <string name="english">ಇಂಗ್ಲಿಷ್</string>
+    <string name="kannada">ಕನ್ನಡ</string>
+
+    <string-array name="language_arrays">
+        <item>ಇಂಗ್ಲಿಷ್</item>
+        <item>ಕನ್ನಡ</item>
+    </string-array>
+    <string-array name="language_layout">
+        <item>ಇಂಗ್ಲಿಷ್</item>
+        <item>ಕನ್ನಡ</item>
+    </string-array>
+
+</resources>
+
