@@ -2,12 +2,20 @@ package com.example.hp.kan_leters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.SubscriptSpan;
+import android.text.style.SuperscriptSpan;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Created by Hp on 5/17/2017.
@@ -38,6 +47,9 @@ public class DiaryContent  extends AppCompatActivity implements TextToSpeech.OnI
     TextToSpeech tts;
 
     String language;
+
+
+    Locale myLocale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +74,8 @@ public class DiaryContent  extends AppCompatActivity implements TextToSpeech.OnI
                 Toast.makeText
                         (getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT)
                         .show();
-                language = selectedItemText;
+                language = String.valueOf(selectedItemText);
+              //  language = String.valueOf(spinner.getSelectedItem());
             }
 
             @Override
@@ -116,12 +129,25 @@ public class DiaryContent  extends AppCompatActivity implements TextToSpeech.OnI
         @Override
         public void onClick(View arg0) {
 
+
+
+
+
+
             Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en_US");
-           // intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "en-IN");
-            intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"speak now");
+          //  intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-IN");
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "en-IN");
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT,getString(R.string.speak));
             startActivityForResult(intent, RQS_RECOGNITION);
+
+            SpannableStringBuilder cs = new SpannableStringBuilder("abc");
+            cs.setSpan(new SubscriptSpan(), 1,1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            cs.setSpan(new RelativeSizeSpan(0.75f), 1, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            //   cs.setSpan(new SuperscriptSpan(), 6, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            //   cs.setSpan(new RelativeSizeSpan(0.75f), 6, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            editText.append(cs);
+
 
         }
     };
@@ -132,11 +158,15 @@ public class DiaryContent  extends AppCompatActivity implements TextToSpeech.OnI
             ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             //String query = "select " + DatabaseHelper.COL2 + "from " + DatabaseHelper.TABLE_NAME + "where " +DatabaseHelper.COL1+ " = " +result;
             //DisplayStringArray.append(result.get(0));
-
-            if (language.equals("English")) {
+            String eng = getString(R.string.english);
+            String kan = getString(R.string.kannada);
+            if (language.equals(eng)) {
                 editText.append(result.get(0));
                 editText.append(" ");
-            } else if (language.equals("Kannada")) {
+
+
+
+            } else if (language.equals(kan)) {
 
 
                 String[] words = result.get(0).split(" ");
@@ -148,10 +178,12 @@ public class DiaryContent  extends AppCompatActivity implements TextToSpeech.OnI
 
 
                         Cursor cursor = DatabaseHelper.translate(sp);
+                      //  String let = cursor.getString(0);
                         if (cursor.moveToNext()) {
                             editText.append(cursor.getString(0));
 
                         } else {
+
 
                             editText.append(sp);
 
@@ -164,8 +196,6 @@ public class DiaryContent  extends AppCompatActivity implements TextToSpeech.OnI
 
                 }
             }
-
-
 
         }
     }

@@ -13,6 +13,8 @@
     <string name="applang">App Language</string>
     <string name="set">Set</string>
     <string name="speak">Speak now</string>
+    <string name="english">English</string>
+    <string name="kannada">Kannada</string>
     <string-array name="language_arrays">
         <item>English</item>
         <item>Kannada</item>
