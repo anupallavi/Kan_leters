@@ -27,6 +27,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -42,11 +44,42 @@ public class DiaryContent  extends AppCompatActivity implements TextToSpeech.OnI
     ImageButton calendar,startRecognizer;
     private static final int RQS_RECOGNITION = 1;
 
-    private static final String DB_NAME = "kan_letters.db";
+    private static final String DB_NAME = "kan_let.db";
     EditText editText;
     TextToSpeech tts;
 
     String language;
+
+    private static final HashSet<Character> vowels = new HashSet<Character>();
+
+    //Initialize vowels hashSet to contain vowel characters
+    static{
+        vowels.add('a');
+        vowels.add('e');
+        vowels.add('i');
+        vowels.add('o');
+        vowels.add('u');
+        vowels.add('A');
+        vowels.add('E');
+        vowels.add('I');
+        vowels.add('O');
+        vowels.add('U');
+    }
+
+    private static final HashSet<String> varNa = new HashSet<String>();
+    static {
+        varNa.add("kh");
+        varNa.add("gh");
+        varNa.add("ch");
+        varNa.add("jh");
+        varNa.add("th");
+        varNa.add("dh");
+        varNa.add("ph");
+        varNa.add("bh");
+        varNa.add("sh");
+           }
+
+
 
 
     Locale myLocale;
@@ -114,6 +147,17 @@ public class DiaryContent  extends AppCompatActivity implements TextToSpeech.OnI
                 startActivity(intent);
             }
         });}
+
+
+    public static boolean isVowel(Character c){
+
+        return vowels.contains(c);
+    }
+    public static boolean isVarna(String s){
+
+        return varNa.contains(s);
+    }
+
     public void AddData(View view){
         String content = editText.getText().toString();
         String date = textView.getText().toString();
@@ -141,13 +185,6 @@ public class DiaryContent  extends AppCompatActivity implements TextToSpeech.OnI
             intent.putExtra(RecognizerIntent.EXTRA_PROMPT,getString(R.string.speak));
             startActivityForResult(intent, RQS_RECOGNITION);
 
-            SpannableStringBuilder cs = new SpannableStringBuilder("abc");
-            cs.setSpan(new SubscriptSpan(), 1,1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            cs.setSpan(new RelativeSizeSpan(0.75f), 1, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            //   cs.setSpan(new SuperscriptSpan(), 6, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            //   cs.setSpan(new RelativeSizeSpan(0.75f), 6, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            editText.append(cs);
-
 
         }
     };
@@ -168,33 +205,163 @@ public class DiaryContent  extends AppCompatActivity implements TextToSpeech.OnI
 
             } else if (language.equals(kan)) {
 
+             //  String test = "chandra ";
+              //  String vowel = "a|e|i|o|u";
+               // String[] words = test.split(" ");
+               String[] words = result.get(0).split(" ");
+                for (String word : words) {
+                    int i = 0, index = 0, len = 0;
+                    String str = word;
+                    List<String> splits = new ArrayList<String>();
+                    //String[] splits = new String[0];
+                    len = str.length();
+                    char nextindex = 0;
+                    char ch;
+                    while (len != 0) {
+                       // char ch = str.charAt(index);
+                        do{
+                            ch = str.charAt(index++);
+                        }
+                        while (!isVowel(ch));
 
-                String[] words = result.get(0).split(" ");
-                for (String str : words) {
+                        if(index < len) {
 
-                    String[] splits = str.split("(?<=au|ai|ah|am|ru|oo|ii|uu|ee|aa|o|i|u|e|a)");
+                            nextindex = str.charAt(index);
+                            if (isVowel(nextindex))
 
-                    for (String sp : splits) {
+                            {
+                                index = index + 1;
+                                String subs = str.substring(0, index);
+                                //splits[i] = subs;
+                                splits.add(subs);
+                                i++;
+                                String repstr = str.substring(index, str.length());
+                                //  str.replace(str, repstr);
+                                str = repstr;
+                                // str = str.substring(index + 1, str.length()+1);
+                                len = str.length();
+                                index = 0;
+                            } else {
+                                String subs = str.substring(0, index);
+                              //  splits[i] = subs;
+                                splits.add(subs);
+                                i++;
+                                String repstr = str.substring(index, str.length());
+                                //   str.replace(str, repstr);
+                                str = repstr;
+                                // str = str.substring(index + 1, str.length()+1);
+                                len = str.length();
+                                index = 0;
+                            }
+                        }
+                        else{
+                            String subs = str.substring(0, index);
+                           // splits[i] = subs;
+                            splits.add(subs);
+                            i++;
+                            String repstr = str.substring(index, str.length());
+                            //   str.replace(str, repstr);
+                            str = repstr;
+                            // str = str.substring(index + 1, str.length()+1);
+                            len = str.length();
+                            index = 0;
+                        }
+                    }
+
+                        //  String[] splits = str.split("(?<=au|ai|ah|am|ru|oo|ii|uu|ee|aa|o|i|u|e|a)");
+
+                        for (String sp : splits) {
 
 
-                        Cursor cursor = DatabaseHelper.translate(sp);
-                      //  String let = cursor.getString(0);
-                        if (cursor.moveToNext()) {
-                            editText.append(cursor.getString(0));
+                            Cursor cursor = DatabaseHelper.translate(sp);
+                            //  String let = cursor.getString(0);
+                            if (cursor.moveToNext()) {
+                                editText.append(cursor.getString(0));
 
-                        } else {
+                            } else {
+
+                                List<String> vatvol = new ArrayList<String>();
+                                int indv = 0, count = 0, two = 2;
+                                char vat;
+                                //   sp = "ndra";
+
+                                if (sp.startsWith("n")) {
+                                    editText.append("O");
+                                    vatvol.add("");
+                                    sp = sp.substring(1, sp.length());
+                                } else if (sp.startsWith("r")) {
+                                    vatvol.add("೯");
+                                    sp = sp.substring(1, sp.length());
+                                } else {
+                                    vatvol.add("");
+                                }
+
+                                do {
+                                    vat = sp.charAt(indv++);
+                                }
+                                while (!isVowel(vat));
+
+                                String subvat = sp.substring(indv - 1, sp.length());
+                                vatvol.add(subvat);
+
+                                String repvat = sp.substring(0, indv - 1);
+                                sp = repvat;
 
 
-                            editText.append(sp);
+                                while (sp.length() >= 2) {
 
+                                    String varna = sp.substring(0, 2);
+                                    Boolean var = isVarna(varna);
+                                    if (var) {
+                                        vatvol.add(varna);
+                                        sp = sp.substring(2, sp.length());
+                                    } else {
+                                        varna = sp.substring(0, 1);
+                                        vatvol.add(varna);
+                                        sp = sp.substring(1, sp.length());
+                                    }
+                                }
+                                if (sp.length() != 0) {
+                                    vatvol.add(sp);
+                                }
+                                String conso = vatvol.get(2) + vatvol.get(1);
+
+                                Cursor curcon = DatabaseHelper.translate(conso);
+                                //  String let = cursor.getString(0);
+                                if (curcon.moveToNext()) {
+                                    editText.append(curcon.getString(0));
+
+
+                                } else {
+                                    editText.append(conso);
+
+
+                                }
+                                curcon.close();
+                                int sj = 3;
+                                int size = vatvol.size();
+                                while (sj < size) {
+                                    String vatu = vatvol.get(sj);
+                                    sj = sj + 1;
+                                    Cursor curvat = DatabaseHelper.translate(vatu);
+                                    //  String let = cursor.getString(0);
+                                    if (curvat.moveToNext()) {
+                                        editText.append(curvat.getString(0));
+
+                                    } else {
+                                        editText.append(vatu);
+                                    }
+                                    curvat.close();
+                                }
+                                editText.append(vatvol.get(0));
+                            }
+                            cursor.close();
 
                         }
-                        cursor.close();
+                        editText.append("  ");
 
                     }
-                    editText.append(" ");
 
-                }
             }
 
         }

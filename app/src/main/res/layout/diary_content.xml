@@ -31,8 +31,8 @@
             android:id="@+id/predate"
             android:layout_width="35dp"
             android:layout_height="45dp"
-            android:layout_toRightOf="@+id/date"
-            android:text="<"
+            android:layout_toLeftOf="@+id/date"
+            android:text="v"
             android:textColor="@color/colorAccent"
             />
 
@@ -52,7 +52,7 @@
             android:id="@+id/nextdate"
             android:layout_width="35dp"
             android:layout_height="45dp"
-            android:layout_toLeftOf="@+id/date"
+            android:layout_toRightOf="@+id/date"
             android:text=">"
             android:textColor="@color/colorAccent"
             />
